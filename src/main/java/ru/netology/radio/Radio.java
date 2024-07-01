@@ -1,8 +1,23 @@
 package ru.netology.radio;
 
 public class Radio {
-    private int currentVolume;
-    private int currentStation;
+    private int minVolume;
+    private int maxVolume;
+    private int currentVolume = minVolume;
+    private int minStation;
+    private int maxStation;
+    private int currentStation = minStation;
+
+    public Radio() {
+        minVolume = 0;
+        maxVolume = 100;
+        minStation = 0;
+        maxStation = 9;
+    }
+
+    public Radio(int amountStations) {
+        maxStation = amountStations - 1;
+    }
 
     public int getCurrentVolume() {
         return currentVolume;
@@ -10,32 +25,32 @@ public class Radio {
 
     public void increaseVolume() {
         if (currentVolume == 0) {
-            currentVolume = 0;
+            currentVolume = minVolume;
             return;
         }
-        if (currentVolume < 100) {
+        if (currentVolume < maxVolume) {
             currentVolume = currentVolume + 1;
         }
     }
 
     public void decreaseVolume() {
         if (currentVolume == 0) {
-            currentVolume = 0;
+            currentVolume = minVolume;
             return;
         }
-        if (currentVolume < 100) {
+        if (currentVolume < maxVolume) {
             currentVolume = currentVolume - 1;
         }
     }
 
-    public void setCurrentVolume(int newCurrentVolume) {
-        if (newCurrentVolume < 0) {
-            newCurrentVolume = 0;
+    public void setCurrentVolume(int currentVolume) {
+        if (currentVolume < 0) {
+            currentVolume = minVolume;
         }
-        if (newCurrentVolume > 100) {
-            newCurrentVolume = 100;
+        if (currentVolume > 100) {
+            currentVolume = maxVolume;
         }
-        currentVolume = newCurrentVolume;
+        this.currentVolume = currentVolume;
     }
 
     public int getCurrentStation() {
@@ -43,30 +58,30 @@ public class Radio {
     }
 
     public void nextStation() {
-        if (currentStation < 9) {
+        if (currentStation < maxStation) {
             currentStation = currentStation + 1;
         }
-        if (currentStation == 9) {
-            currentStation = 0;
+        if (currentStation == maxStation) {
+            currentStation = minStation;
         }
     }
 
     public void prevStation() {
-        if (currentStation == 0) {
-            currentStation = 9;
+        if (currentStation == minStation) {
+            currentStation = maxStation;
         }
-        if (currentStation < 9) {
+        if (currentStation < maxStation) {
             currentStation = currentStation - 1;
         }
     }
 
-    public void setCurrentStation(int newCurrentStation) {
-        if (newCurrentStation < 0) {
+    public void setCurrentStation(int currentStation) {
+        if (currentStation < minStation) {
             return;
         }
-        if (newCurrentStation > 9) {
+        if (currentStation > maxStation) {
             return;
         }
-        currentStation = newCurrentStation;
+        this.currentStation = currentStation;
     }
 }
